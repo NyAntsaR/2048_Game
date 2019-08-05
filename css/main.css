@@ -1,0 +1,60 @@
+*, *::before, *section{
+    box-sizing: border-box; /*take everything including the box (border)*/
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex; /*flexbox in css*/
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("http://www.hdnicewallpapers.com/Walls/Big/Abstract/Red_and_Blue_Smoke_Creative_Design_Wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+h1 {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 50px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+#msg {
+    font-size: 30px;
+    color: white  
+}
+
+section.board {
+    display: grid;
+    grid-template-columns: repeat(4,10vmin);
+    grid-template-rows: repeat(4,10vmin);
+    grid-gap: 1vmin;
+}
+
+section.board div {
+    border: 1px solid grey;
+    border-radius: 10%;
+}
+
+button {
+    color: white;
+    height: 50px;
+    background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+    border: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 9pt;
+    outline: none;
+    margin-top: 30px;
+}
+
+button:hover {
+    border: 1px #C6C6C6 solid;
+    box-shadow: 1px 1px 1px #EAEAEA;
+    color: #333333;
+    background: #F7F7F7;
+}
