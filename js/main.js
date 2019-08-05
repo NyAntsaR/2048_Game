@@ -25,6 +25,7 @@ let arr = document.querySelectorAll('div');
 let value = Object.keys(VALUE);
 
 /*----- event listeners -----*/ 
+document.addEventListener('keydown', direction);
 
 /*----- functions -----*/
 init ();
@@ -55,5 +56,20 @@ function render () {
     for (var i = 0; i < 1; i++){
         var randomCell =  arr[Math.floor(Math.random() * arr.length)] ;
         randomCell.textContent = 4; 
+    }
+}
+
+//---------- EVENT KEYBOARD ----------
+function  direction(event){
+    if(!loss) {
+        if(event.keyCode === 38 || event.keyCode === 87){
+            moveUp();
+        } else if(event.keyCode === 38 || event.keyCode === 87){
+            moveRight;
+        } else if (event.keyCode === 38 || event.keyCode === 87){
+            moveDown();
+        } else if (event.keyCode === 38 || event.keyCode === 87){
+            moveLeft();
+        }
     }
 }
