@@ -1,8 +1,8 @@
 /*----- constants -----*/ 
-const VALUE = {
+const COLORS_MAPPER = {
     '0' : '#B63C58',
     '2' : '#D2691E',
-    '4' : '#FF7F50',
+    '4' : '#40ff00',
     '8' : '#ffbf00',
     '16': '#bfff00',
     '32' : '#40ff00',
@@ -22,7 +22,6 @@ let option = 0;
 /*----- cached element references -----*/
 
 let arr = document.querySelectorAll('div');
-let value = Object.keys(VALUE);
 
 /*----- event listeners -----*/ 
 document.addEventListener('keydown', direction);
@@ -43,22 +42,20 @@ function init () {
     render();
 }
 
-function render () {
-    board.forEach(function(col, idx){
-        arr[idx].style.background = VALUE[col];
-    });  
+function render () {   
+        var initial_colors  = [2, 4];
+        for (var i = 0; i < 2; i++){
+            var index = Math.floor(Math.random() * arr.length)
+            while (arr[index].textContent) {
+                index = Math.floor(Math.random() * arr.length)
+            }
+            var color = initial_colors[Math.floor(Math.random() * 2)]
+            arr[index].style.background = COLORS_MAPPER[color];
+            arr[index].textContent = color;
+        }   
+    };
 
-    for (var i = 0; i < 1; i++){
-        var randomCell =  arr[Math.floor(Math.random() * arr.length)] ;
-        randomCell.textContent = 2; 
-    }
-
-    for (var i = 0; i < 1; i++){
-        var randomCell =  arr[Math.floor(Math.random() * arr.length)] ;
-        randomCell.textContent = 4; 
-    }
-}
-
+     
 //---------- EVENT KEYBOARD ----------
 function  direction(event){
     if(!loss) {
@@ -73,3 +70,11 @@ function  direction(event){
         }
     }
 }
+
+//---------- MOVE -------------------
+//Move up
+//Move down
+//Move right
+//Move left
+
+
