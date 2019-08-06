@@ -15,66 +15,65 @@ const COLORS_MAPPER = {
 };
 
 /*----- app's state (variables) -----*/
-let board;
 let winner;
-let loss = false;
+let loss = true;
 let option = 0;
+
 /*----- cached element references -----*/
 
-let arr = document.querySelectorAll('div');
+let table = document.getElementById("grid");
+let row_count = table.rows.length;
+
+let btn = document.getElementById('btn');
 
 /*----- event listeners -----*/ 
+
 document.addEventListener('keydown', direction);
 
 /*----- functions -----*/
-init ();
+init();
 
 function init () {
-    board = [
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0
-    ];
+  var initial_colors  = [2, 4]; 
+      for (var i = 0; i < 2; i++){
+        
+          var row = Math.floor(Math.random() * row_count);
+          var col = Math.floor(Math.random() * row_count);
+          // console.log("whats inside")
+          // console.log(table.rows[row].cells[col].innerHTML)
+          // while (table.rows[row].cells[col].innerHTML) {
+          //     row = Math.floor(Math.random() * row_count);
+          //     col = Math.floor(Math.random() * row_count);
+          // }
+       
+          var number = initial_colors[Math.floor(Math.random() * 2)];
+          table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
+          table.rows[row].cells[col].innerHTML = number;
+      } 
+};
 
-    winner = null;
-
-    render();
-}
-
-function render () {   
-        var initial_colors  = [2, 4];
-        for (var i = 0; i < 2; i++){
-            var index = Math.floor(Math.random() * arr.length)
-            while (arr[index].textContent) {
-                index = Math.floor(Math.random() * arr.length)
-            }
-            var color = initial_colors[Math.floor(Math.random() * 2)]
-            arr[index].style.background = COLORS_MAPPER[color];
-            arr[index].textContent = color;
-        }   
-    };
-
-     
 //---------- EVENT KEYBOARD ----------
 function  direction(event){
-    if(!loss) {
-        if(event.keyCode === 38 || event.keyCode === 87){
-            moveUp();
-        } else if(event.keyCode === 38 || event.keyCode === 87){
-            moveRight;
-        } else if (event.keyCode === 38 || event.keyCode === 87){
-            moveDown();
-        } else if (event.keyCode === 38 || event.keyCode === 87){
-            moveLeft();
-        }
-    }
+  if(event.keyCode === 38){
+      moveUp();
+  } else if(event.keyCode === 39){
+      moveRight();
+  } else if (event.keyCode === 40){
+      moveDown();
+  } else if (event.keyCode === 37){
+      moveLeft();
+  }
 }
-
 //---------- MOVE -------------------
-//Move up
-//Move down
-//Move right
-//Move left
+function moveUp() {
+  for (var i = 0; i < table.rows.length; i++) {
+    var row = "";
+    for( var j = 0; j < table.rows.length; j++){
+      if (table.rows[row].cells[col].innerHTML){
+        
+      }
+    }
+  }
+}
 
 

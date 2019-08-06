@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>2048</title>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+  </head>
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script defer src="js/main.js"></script>
+  <body>
+    <div class = "container">
 
-    <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Homemade+Apple&display=swap" rel="stylesheet">
+      <h1> 2048 </h1>
 
+      <input id="btn" type="button" value="Play Game" />
 
-</head>
-<body>
-    <h1>2048</h1>
-    <h2 id="msg"><b></b></h2> <!--Gets updated-->
+      <table id="grid">
+        <tr>
+          <td id="cell00">&nbsp;</td>
+          <td id="cell01">&nbsp;</td>
+          <td id="cell02">&nbsp;</td>
+          <td id="cell03">&nbsp;</td>
+        </tr>
 
-    <!--create a board-->
-    <section class="board">
-        <div id="col0"></div>
-        <div id="col1"></div>
-        <div id="col2"></div>
-        <div id="col3"></div>
+        <tr>
+          <td id="cell10">&nbsp;</td>
+          <td id="cell11">&nbsp;</td>
+          <td id="cell12">&nbsp;</td>
+          <td id="cell13">&nbsp;</td>
+        </tr>
 
-        <div id="col4"></div>
-        <div id="col5"></div>
-        <div id="col6"></div>
-        <div id="col7"></div>
+        <tr>
+          <td id="cell20">&nbsp;</td>
+          <td id="cell21">&nbsp;</td>
+          <td id="cell22">&nbsp;</td>
+          <td id="cell23">&nbsp;</td>
+        </tr>
 
-        <div id="col8"></div>    
-        <div id="col9"></div> 
-        <div id="col10"></div> 
-        <div id="col11"></div> 
+        <tr>
+          <td id="cell30">&nbsp;</td>
+          <td id="cell31">&nbsp;</td>
+          <td id="cell32">&nbsp;</td>
+          <td id="cell33">&nbsp;</td>
+        </tr>
+      </table> 
 
-        <div id="col12"></div>    
-        <div id="col13"></div> 
-        <div id="col14"></div>
-        <div id="col15"></div> 
-    </section>
-    
-    <!--reset button-->
-    <button>Reset Game</button>
-</body>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
 </html>
