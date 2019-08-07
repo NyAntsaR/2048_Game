@@ -17,8 +17,8 @@ const COLORS_MAPPER = {
 /*----- app's state (variables) -----*/
 
 let winner;
-let score;
-let loss = true;
+let score = 0;
+let loss = false;
 
 /*----- cached element references -----*/
 
@@ -30,6 +30,8 @@ let btn = document.getElementById('btn');
 /*----- event listeners -----*/ 
 
 document.addEventListener('keydown', direction);
+document.getElementById('btn').addEventListener('click', init);
+let scoreLabel = document.getElementById('score');
 
 /*----- functions -----*/
 init();
@@ -52,112 +54,313 @@ function init () {
           table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
           
       } 
-    // setCell(0, 1, 2)
-    // setCellColor(0, 1, COLORS_MAPPER[2])
-    // setCell(3, 1, 2)
-    // setCellColor(3, 1, COLORS_MAPPER[2])
 };
 
 //---------- EVENT KEYBOARD ----------
 
 function  direction(event){
-  if(event.keyCode === 38){
-      moveUp();
-  } else if(event.keyCode === 39){
-      moveRight();
-  } else if (event.keyCode === 40){
-      moveDown();
-  } else if (event.keyCode === 37){
-      moveLeft();
-  }
+    if(!loss){
+        if(event.keyCode === 38){
+            moveUp();
+        } else if (event.keyCode === 40){
+            moveDown();
+        }else if(event.keyCode === 39){
+          moveRight();
+        } else if (event.keyCode === 37){
+            moveLeft();
+        }
+    }
+    scoreLabel.innerHTML = 'Score: ' + score;
 }
 
 //---------- MOVE -------------------
+
+//----------------UP-----------------------
+//Use FILO
 function moveUp() {
     var row;
-    var listContainer
+    var listContainer;
+    
     for (col=0; col<4; col++) {
-        row = 3
-        listContainer = [] //hold value 
-        while (row >= 0) {
-            var currElem = getCell(row, col)
+        row = 3;
+        listContainer = []; //hold value 
+
+        while (row >= 0) { //start from row 3
+            var currElem = getCell(row, col);
             if (!isEmpty(row, col)) {
                 if (listContainer.length > 0) {
-                    // console.log("Not Empty stack")
-                    // console.log(listContainer)
-                    lastElement = listContainer[listContainer.length-1]
+                    //store the element
+                    var lastElement = listContainer[listContainer.length-1];
+                    //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
                     if (lastElement[0] == currElem && lastElement[1] == false) {
-                        
-                        listContainer.push([listContainer.pop()[0] * 2, true])
+                        //take the last one and show it with new value * 2
+                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                        score += lastElement;
                     } else {
-                        listContainer.push([currElem, false])
+                        listContainer.push([currElem, false]);
                     }
+
                 } else {
-                    listContainer.push([currElem, false])  //set last element in the container with indication if not a final value i.e cannot add anymore
+                    listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
                 }
             }
-            row--
+            row--;
         }
-        console.log("Hello stack")
-        console.log(listContainer)
+        
         for (i = 0; i < 4; i++) {
             if (listContainer.length > 0) {
-                number = listContainer.pop()[0]
-                setCell(i, col, number)
-                setCellColor(i, col, COLORS_MAPPER[number])
+                var number = listContainer.pop()[0];
+                setCell(i, col, number);
+                setCellColor(i, col, COLORS_MAPPER[number]);
             }
             else {
-                setCell(i, col, "")
-                setCellColor(i, col, "")
+                setCell(i, col, "");
+                setCellColor(i, col, "");
             }
         }
-
+ 
     }
-    // var i, j, cell
-
-    // // for(j = 0; j < 4; j++) {
-    //       for(i = 0; i < 4; i++) {
-    //         if(!isEmpty) { //if table contain a value
-    //             cell = i; 
-    //             while (cell > 0) {
-                
-    //             if(!table.rows[cell - 1].cells[j].innerHTML) { //look backwards if the table contain number
-    //                 table.rows[cell - 1].cells[j].innerHTML = table.cells[cell][j].innerHTML;
-    //                 table.rows[cell].cells[j].innerHTML = 0; // set the previous cell to zero
-    //                 cell--;
-
-    //             } 
-                
-    //             else if (table.rows[cell].cells[j].innerHTML == table.rows[cell - 1].cells[j].innerHTML) { //check if it's the same number
-    //                 table.rows[cell - 1].cells[j].innerHTML *= 2; //multiply the value by two
-    //                 score +=  table.rows[row - 1].cells[j].innerHTML;
-    //                 table.rows[cell].cells[j].innerHTML = 0; // set the previous cell to zero
-    //                 break;
-    //             } 
-                
-    //             else {
-    //                 break; 
-    //             }
-    //           }
-    //         }
-    //     }
-    // }
+    addTwo();
 }
-
+//----------CHECK-UP--------------------
+//Check if cell is empty
 function isEmpty(row, col) {
-    return getCell(row, col) == ""
+    return getCell(row, col) == "";
 }
 
+//Get the cell from the html table
 function getCell(row, col) {
-    return table.rows[row].cells[col].innerHTML
+    return table.rows[row].cells[col].innerHTML;
 }
 
+//Set the cell to new element
 function setCell(row, col, elm) {
-    table.rows[row].cells[col].innerHTML = elm
+    table.rows[row].cells[col].innerHTML = elm;
 }
 
+//Add background to cell
 function setCellColor(row, col, color) {
     table.rows[row].cells[col].style.background = color
 }
 
+//Add new cell with 2
+function addTwo(){
+    for (var i = 0; i < 2; i++){
+        if (isEmpty(row, col)){
+            var row = Math.floor(Math.random() * row_count);
+            var col = Math.floor(Math.random() * row_count);
+
+            var number = 2;
+            table.rows[row].cells[col].innerHTML = number;
+            table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
+        }    
+    }
+}
+
+
+//------------------------LEFT--------------------------
+
+function moveLeft() {
+    var row;
+    var listContainer;
+    
+    for (col=0; col<4; col++) {
+        row = 0;
+        listContainer = []; //hold value 
+
+        while (row <= 3) { //start from row 0 going doing to index 3
+            var currElem = getCellLeft(row, col);
+
+            if (!isEmptyLeft(row, col)) {
+                if (listContainer.length > 0) {
+                    //store the element
+                    var lastElement = listContainer[listContainer.length-1];
+                    console.log(lastElement);
+                    //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
+                    if (lastElement[0] == currElem && lastElement[1] == false) {
+                        //take the last one and show it with new value * 2
+                        listContainer.push([listContainer.pop()[0] * 2, true]);
+
+                    } else {
+                        listContainer.push([currElem, false]);
+                    }
+
+                } else {
+                    listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
+                }
+            }
+            row++;
+        }
+
+        //container
+        for (i = 0; i < 4; i++) {
+            if (listContainer.length > 0) {
+                var number = listContainer.pop()[0];
+                setCellLeft(i, col, number);
+                setCellColorLeft(i, col, COLORS_MAPPER[number]);
+            }
+            else {
+                setCellLeft(i, col, "");
+                setCellColorLeft(i, col, "");
+            }
+        }
+ 
+    }
+}
+
+function isEmptyLeft(col, row) {
+    return getCellLeft(col, row) == "";
+}
+
+//Get the cell from the html table
+function getCellLeft(col, row) {
+    return table.rows[row].cells[col].innerHTML;
+}
+
+//Set the cell to new element
+function setCellLeft(col, row, elm) {
+    table.rows[row].cells[col].innerHTML = elm;
+}
+
+//Add background to cell
+function setCellColorLeft(col, row, color) {
+    table.rows[row].cells[col].style.background = color
+}
+
+//Add new 2
+// function addTwo(){
+
+// }
+
+//---------------------RIGHT----------------------------
+
+// function moveRight() {
+//     var row;
+//     var listContainer;
+    
+//     for (col=0; col<4; col++) {
+//         row = 0;
+//         listContainer = []; //hold value 
+
+//         while (row <= 3) { //start from row 3
+//             var currElem = getCellRight(col, row);
+//             if (!isEmptyRight(col, row)) {
+//                 if (listContainer.length > 0) {
+//                     //store the element
+//                     var lastElement = listContainer[listContainer.length-1];
+//                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
+//                     if (lastElement[0] == currElem && lastElement[1] == false) {
+//                         //take the last one and show it with new value * 2
+//                         listContainer.push([listContainer.pop()[0] * 2, true]);
+//                     } else {
+//                         listContainer.push([currElem, false]);
+//                     }
+
+//                 } else {
+//                     listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
+//                 }
+//             }
+//             row++;
+//         }
+
+//         for (i = 0; i < 4; i++) {
+//             if (listContainer.length > 0) {
+//                 var number = listContainer.pop()[0];
+//                 setCellRight(i, col, number);
+//                 setCellColorRight(i, col, COLORS_MAPPER[number]);
+//             }
+//             else {
+//                 setCellRight(i, col, "");
+//                 setCellColorRight(i, col, "");
+//             }
+//         }
+ 
+//     }
+// }
+
+// //Check if cell is empty
+// function isEmptyRight(row, col) {
+//     return getCellRight(row, col) == "";
+// }
+
+// //Get the cell from the html table
+// function getCellRight(row, col) {
+//     return table.rows[row].cells[col].innerHTML;
+// }
+
+// //Set the cell to new element
+// function setCellRight(row, col, elm) {
+//     table.rows[row].cells[col].innerHTML = elm;
+// }
+
+// //Add background to cell
+// function setCellColorRight(row, col, color) {
+//     table.rows[row].cells[col].style.background = color
+// }
+
+// //---------------DOWN---------------------------------
+
+// function moveRight() {
+//     var row;
+//     var listContainer;
+    
+//     for (col=0; col<4; col++) {
+//         row = 0;
+//         listContainer = []; //hold value 
+
+//         while (row <= 3) { //start from row 3
+//             var currElem = getCell(col, row);
+//             if (!isEmpty(col, row)) {
+//                 if (listContainer.length > 0) {
+//                     //store the element
+//                     var lastElement = listContainer[listContainer.length-1];
+//                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
+//                     if (lastElement[0] == currElem && lastElement[1] == false) {
+//                         //take the last one and show it with new value * 2
+//                         listContainer.push([listContainer.pop()[0] * 2, true]);
+//                     } else {
+//                         listContainer.push([currElem, false]);
+//                     }
+
+//                 } else {
+//                     listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
+//                 }
+//             }
+//             row++;
+//         }
+
+//         for (i = 0; i < 4; i++) {
+//             if (listContainer.length > 0) {
+//                 var number = listContainer.pop()[0];
+//                 setCellDown(i, col, number);
+//                 setCellColorDown(i, col, COLORS_MAPPER[number]);
+//             }
+//             else {
+//                 setCellDown(i, col, "");
+//                 setCellColorDown(i, col, "");
+//             }
+//         }
+ 
+//     }
+// }
+
+// //Check if cell is empty
+// function isEmptyDown(col, row) {
+//     return getCellDown(col, row) == "";
+// }
+
+// //Get the cell from the html table
+// function getCellDOwn(col, row) {
+//     return table.rows[row].cells[col].innerHTML;
+// }
+
+// //Set the cell to new element
+// function setCellDown(col, row, elm) {
+//     table.rows[row].cells[col].innerHTML = elm;
+// }
+
+// //Add background to cell
+// function setCellColorDown(c, col, color) {
+//     table.rows[row].cells[col].style.background = color
+// }
 
