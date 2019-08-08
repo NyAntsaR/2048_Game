@@ -1,17 +1,17 @@
 /*----- constants -----*/ 
 const COLORS_MAPPER = {
-    '0' : '#B63C58',
-    '2' : '#D2691E',
-    '4' : '#40ff00',
-    '8' : '#ffbf00',
-    '16': '#bfff00',
-    '32' : '#40ff00',
-    '64' : '#00bfff',
-    '128' : '581222',
-    '256' : '#122958',
+    '0' : '#E4CAD4',
+    '2' : '#E4CAD4',
+    '4' : '#BA6586',
+    '8' : '#795261',
+    '16': '#78324D',
+    '32' : '#A90645',
+    '64' : '#777576',
+    '128' : '#883E92',
+    '256' : '#5E2D65',
     '512' : '#515812',
-    '1024' : '#121758',
-    '2048' : '#125839'
+    '1024' : '#D90AF5',
+    '2048' : '#43D6D6'
 };
 
 /*----- app's state (variables) -----*/
@@ -239,6 +239,7 @@ function setCellColorLeft(col, row, color) {
 //     var listContainer;
     
 //     for (col=0; col<4; col++) {
+//         for(row = 0; row < )
 //         row = 0;
 //         listContainer = []; //hold value 
 
@@ -278,89 +279,69 @@ function setCellColorLeft(col, row, color) {
 //     }
 // }
 
-// //Check if cell is empty
-// function isEmptyRight(row, col) {
-//     return getCellRight(row, col) == "";
-// }
+//Check if cell is empty
+function isEmptyRight(row, col) {
+    return getCellRight(row, col) == "";
+}
 
-// //Get the cell from the html table
-// function getCellRight(row, col) {
-//     return table.rows[row].cells[col].innerHTML;
-// }
+//Get the cell from the html table
+function getCellRight(row, col) {
+    return table.rows[row].cells[col].innerHTML;
+}
 
-// //Set the cell to new element
-// function setCellRight(row, col, elm) {
-//     table.rows[row].cells[col].innerHTML = elm;
-// }
+//Set the cell to new element
+function setCellRight(row, col, elm) {
+    table.rows[row].cells[col].innerHTML = elm;
+}
 
-// //Add background to cell
-// function setCellColorRight(row, col, color) {
-//     table.rows[row].cells[col].style.background = color
-// }
+//Add background to cell
+function setCellColorRight(row, col, color) {
+    table.rows[row].cells[col].style.background = color
+}
 
 // //---------------DOWN---------------------------------
 
-// function moveRight() {
-//     var row;
-//     var listContainer;
+function moveDown() {
+    var row;
+    var listContainer;
     
-//     for (col=0; col<4; col++) {
-//         row = 0;
-//         listContainer = []; //hold value 
+    for (col=0; col<4; col++) {
+        row = 0;
+        listContainer = []; //hold value 
 
-//         while (row <= 3) { //start from row 3
-//             var currElem = getCell(col, row);
-//             if (!isEmpty(col, row)) {
-//                 if (listContainer.length > 0) {
-//                     //store the element
-//                     var lastElement = listContainer[listContainer.length-1];
-//                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
-//                     if (lastElement[0] == currElem && lastElement[1] == false) {
-//                         //take the last one and show it with new value * 2
-//                         listContainer.push([listContainer.pop()[0] * 2, true]);
-//                     } else {
-//                         listContainer.push([currElem, false]);
-//                     }
+        while (row <= 3) { //start from row 3
+            var currElem = getCell(row, col);
+            if (!isEmpty(row, col)) {
+                if (listContainer.length > 0) {
+                    //store the element
+                    var lastElement = listContainer[listContainer.length-1];
+                    //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
+                    if (lastElement[0] == currElem && lastElement[1] == false) {
+                        //take the last one and show it with new value * 2
+                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                    } else {
+                        listContainer.push([currElem, false]);
+                    }
 
-//                 } else {
-//                     listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
-//                 }
-//             }
-//             row++;
-//         }
-
-//         for (i = 0; i < 4; i++) {
-//             if (listContainer.length > 0) {
-//                 var number = listContainer.pop()[0];
-//                 setCellDown(i, col, number);
-//                 setCellColorDown(i, col, COLORS_MAPPER[number]);
-//             }
-//             else {
-//                 setCellDown(i, col, "");
-//                 setCellColorDown(i, col, "");
-//             }
-//         }
+                } else {
+                    listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
+                }
+            }
+            row++;
+        }
+        console.log("Container")
+        console.log(listContainer)
+        for (var i = 3; i >=0 ; i--) {
+            if (listContainer.length > 0) {
+                var number = listContainer.pop()[0];
+                setCell(i, col, number);
+                setCellColor(i, col, COLORS_MAPPER[number]);
+            }
+            else {
+                setCell(i, col, "");
+                setCellColor(i, col, "");
+            }
+        }
  
-//     }
-// }
-
-// //Check if cell is empty
-// function isEmptyDown(col, row) {
-//     return getCellDown(col, row) == "";
-// }
-
-// //Get the cell from the html table
-// function getCellDOwn(col, row) {
-//     return table.rows[row].cells[col].innerHTML;
-// }
-
-// //Set the cell to new element
-// function setCellDown(col, row, elm) {
-//     table.rows[row].cells[col].innerHTML = elm;
-// }
-
-// //Add background to cell
-// function setCellColorDown(c, col, color) {
-//     table.rows[row].cells[col].style.background = color
-// }
-
+    }
+}
