@@ -13,12 +13,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to top, #dbdcd7 0%, #dddcd7 24%, #e2c9cc 30%, #e7627d 46%, #b8235a 59%, #801357 71%, #3d1635 84%, #1c1a27 100%);
-    
-    /* background-image: url("http://www.freepngclipart.com/download/math/5793-math-images-3-free-download-png.png");
-    background-repeat: no-repeat;
-    background-size: cover; */
-    
+    background-image: linear-gradient(to top, #dbdcd7 0%, #dddcd7 24%, #e2c9cc 30%, #e7627d 46%, #b8235a 59%, #801357 71%, #3d1635 84%, #1c1a27 100%);    
 }
 
 
@@ -28,8 +23,7 @@ h1 {
     letter-spacing: 10px;
     word-spacing: 20px;
     color: #FFFFFF;
-    text-align: center;
-    
+    text-align: center;  
 }
 
 h4 {
@@ -40,11 +34,6 @@ h4 {
 
 span{
   color: yellow;
-}
-
-img {
-  width: 200px;
-  height: auto;
 }
 
 #headStyle{
@@ -58,7 +47,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 p{
@@ -86,7 +74,7 @@ p{
 table {
     background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
     border-radius: 10px;
-    margin: 0 150px;
+    margin: 20px 150px;
     padding: 10px;
 }
      
@@ -95,6 +83,10 @@ td{
     text-align: center;
     padding: 40px;  
     border-radius: 10px;
+    height: 100px;
+    width: 100px;
+    color: white;
+    font-size: 30px;
 }
   
 #btn{

@@ -22,7 +22,7 @@ let loss = false;
 
 /*----- cached element references -----*/
 
-let table = document.getElementById("grid");
+let table = document.querySelectorAll("grid");
 let row_count = table.rows.length;
 
 let btn = document.getElementById('btn');
@@ -31,6 +31,7 @@ let btn = document.getElementById('btn');
 
 document.addEventListener('keydown', direction);
 document.getElementById('btn').addEventListener('click', init);
+const msgEl = document.getElementById('msg').style.fontFamily = "'Chewy', cursive";
 let scoreLabel = document.getElementById('score');
 
 /*----- functions -----*/
@@ -39,21 +40,40 @@ init();
 function init () {
   var initial_number  = [2, 4]; 
       for (var i = 0; i < 2; i++){
-        
-          var row = Math.floor(Math.random() * row_count);
-          var col = Math.floor(Math.random() * row_count);
-          
-          if (table.rows[row].cells[col].innerHTML) {
-              row = Math.floor(Math.random() * row_count);
-              col = Math.floor(Math.random() * row_count);
-          }
-       
-          var number = initial_number[Math.floor(Math.random() * 2)];
-          table.rows[row].cells[col].innerHTML = number;
-          table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
+        var row = Math.floor(Math.random() * row_count);
+        var col = Math.floor(Math.random() * row_count);
+
+        if (table.rows[row].cells[col] != "") {
+             row = Math.floor(Math.random() * row_count);
+             col = Math.floor(Math.random() * row_count);
+        } 
+
+        var number = initial_number[Math.floor(Math.random() * 2)];
+        table.rows[row].cells[col].innerHTML = number;
+        table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
           
       } 
 };
+
+//-------------WINNER-----------------
+
+function winner(){
+    //Check if table contain 2048
+    for(var i = 0; i < 4; i ++){
+        for (var j = 0; j < 4; j++){
+            if (table.rows[i].cells[j] === "8"){
+                msgEl.innerHTML = 'Congratulations!'
+            }
+        }
+    }
+}
+
+//-------------GAME OVER-----------------
+
+// function gameOver(){
+//     //Display message
+//     //Disable the table
+// }
 
 //---------- EVENT KEYBOARD ----------
 
@@ -72,7 +92,7 @@ function  direction(event){
     scoreLabel.innerHTML = 'Score: ' + score;
 }
 
-//---------- MOVE -------------------
+//---------- MOVES -------------------
 
 //----------------UP-----------------------
 //Use FILO
@@ -94,7 +114,7 @@ function moveUp() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         listContainer.push([listContainer.pop()[0] * 2, true]);
-                        score += lastElement.innerHTML;
+                        
                     } else {
                         listContainer.push([currElem, false]);
                     }
@@ -109,6 +129,7 @@ function moveUp() {
         for (i = 0; i < 4; i++) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
+                // score += number;
                 setCell(i, col, number);
                 setCellColor(i, col, COLORS_MAPPER[number]);
             }
@@ -117,7 +138,6 @@ function moveUp() {
                 setCellColor(i, col, "");
             }
         }
- 
     }
     addTwo();
 }
@@ -155,6 +175,7 @@ function moveDown() {
         for (var i = 3; i >=0 ; i--) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
+                // score += number;
                 setCell(i, col, number);
                 setCellColor(i, col, COLORS_MAPPER[number]);
             }
@@ -195,7 +216,7 @@ function addTwo(){
         var row = Math.floor(Math.random() * row_count);
         var col = Math.floor(Math.random() * row_count);
 
-        if (table.rows[row].cells[col].innerHTML) {
+        if (table.rows[row].cells[col].innerHTML != "") {
             row = Math.floor(Math.random() * row_count);
             col = Math.floor(Math.random() * row_count);
         }
@@ -245,6 +266,7 @@ function moveRight() {
         for (i = 3; i >=0; i--) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
+                // score += number;
                 setCellLeft(i, row, number);
                 setCellColorLeft(i, row, COLORS_MAPPER[number]);
             }
@@ -255,7 +277,7 @@ function moveRight() {
         }
  
     } 
-    // addTwo();
+    addTwo();
 }
 
 // //---------------------LEFT----------------------------
@@ -294,6 +316,7 @@ function moveLeft() {
         for (i = 0; i < 4; i++) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
+                // score += number;
                 setCellLeft(i, row, number);
                 setCellColorLeft(i, row, COLORS_MAPPER[number]);
             }
@@ -304,7 +327,10 @@ function moveLeft() {
         }
  
     }
+    addTwo();
 }
+
+//----------CHECK--------------------
 
 function isEmptyLeft(col, row) {
     return getCellLeft(col, row) == "";
@@ -323,4 +349,11 @@ function setCellLeft(col, row, elm) {
 //Add background to cell
 function setCellColorLeft(col, row, color) {
     table.rows[row].cells[col].style.background = color
+}
+
+//-----------CLIPBOARD---------
+function copyToClipboard(table){
+    var newCopy = document.body.createNewCopy();
+    newCopy.moveToElementText(table);
+    newCopy.execCommand("Copy");
 }
