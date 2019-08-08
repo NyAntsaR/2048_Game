@@ -94,7 +94,7 @@ function moveUp() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         listContainer.push([listContainer.pop()[0] * 2, true]);
-                        score += parseInt(lastElement.innerHTML);
+                        score += lastElement.innerHTML;
                     } else {
                         listContainer.push([currElem, false]);
                     }
@@ -122,8 +122,7 @@ function moveUp() {
     addTwo();
 }
 
-// //---------------DOWN---------------------------------
-
+//---------------DOWN---------------------------------
 function moveDown() {
     var row;
     var listContainer;
@@ -211,17 +210,17 @@ function addTwo(){
 //------------------------RIGHT--------------------------
 
 function moveRight() {
-    var row;
+    var col;
     var listContainer;
     
-    for (col=0; col<4; col++) {
-        row = 3;
+    for (row=0; row<4; row++) {
+        col = 0;
         listContainer = []; //hold value 
 
-        while (row >= 0) { //start from row 0 going doing to index 3
-            var currElem = getCellLeft(row, col);
+        while (col <= 3) { //start from row 0 going doing to index 3
+            var currElem = getCellLeft(col, row);
 
-            if (!isEmptyLeft(row, col)) {
+            if (!isEmptyLeft(col, row)) {
                 if (listContainer.length > 0) {
                     //store the element
                     var lastElement = listContainer[listContainer.length-1];
@@ -239,75 +238,73 @@ function moveRight() {
                     listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
                 }
             }
-            row--;
+            col++;
         }
 
         //container
         for (i = 3; i >=0; i--) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
-                setCellLeft(i, col, number);
-                setCellColorLeft(i, col, COLORS_MAPPER[number]);
+                setCellLeft(i, row, number);
+                setCellColorLeft(i, row, COLORS_MAPPER[number]);
             }
             else {
-                setCellLeft(i, col, "");
-                setCellColorLeft(i, col, "");
+                setCellLeft(i, row, "");
+                setCellColorLeft(i, row, "");
             }
         }
  
     } 
-    addTwo();
+    // addTwo();
 }
 
 // //---------------------LEFT----------------------------
 
-// function moveLeft() {
-//     var row;
-//     var listContainer;
+function moveLeft() {
+    var col;
+    var listContainer;
     
-//     for (col=0; col<4; col++) {
-//         row = 0;
-//         listContainer = []; //hold value 
+    for (row=0; row<4; row++) {
+        col = 3;
+        listContainer = []; //hold value 
 
-//         while (row >= 3) { //start from row 0 going doing to index 3
-//             var currElem = getCell(row, col);
+        while (col >= 0) { //start from row 0 going doing to index 3
+            var currElem = getCellLeft(col, row);
+            
+            if (!isEmptyLeft(col, row)) {
+                if (listContainer.length > 0) {
+                    //store the element
+                    var lastElement = listContainer[listContainer.length-1];
+                    //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
+                    if (lastElement[0] == currElem && lastElement[1] == false) {
+                        //take the last one and show it with new value * 2
+                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                    } else {
+                        listContainer.push([currElem, false]);
+                    }
 
-//             if (!isEmpty(row, col)) {
-//                 if (listContainer.length > 0) {
-//                     //store the element
-//                     var lastElement = listContainer[listContainer.length-1];
-//                     console.log(lastElement);
-//                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
-//                     if (lastElement[0] == currElem && lastElement[1] == false) {
-//                         //take the last one and show it with new value * 2
-//                         listContainer.push([listContainer.pop()[0] * 2, true]);
+                } else {
+                    listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
+                }
+            }
+            col--;
+        }
 
-//                     } else {
-//                         listContainer.push([currElem, false]);
-//                     }
-
-//                 } else {
-//                     listContainer.push([currElem, false]);  //set last element in the container with indication if not a final value i.e cannot add anymore
-//                 }
-//             }
-//             row++;
-//         }
-
-//         //container
-//         for (i = 1; i < 4; i++) {
-//             if (listContainer.length > 0) {
-//                 var number = listContainer.pop()[0];
-//                 setCell(i, col, number);
-//                 setCellColor(i, col, COLORS_MAPPER[number]);
-//             }
-//             else {
-//                 setCell(i, col, "");
-//                 setCellColor(i, col, "");
-//             }
-//         }
+        //container
+        for (i = 0; i < 4; i++) {
+            if (listContainer.length > 0) {
+                var number = listContainer.pop()[0];
+                setCellLeft(i, row, number);
+                setCellColorLeft(i, row, COLORS_MAPPER[number]);
+            }
+            else {
+                setCellLeft(i, row, "");
+                setCellColorLeft(i, row, "");
+            }
+        }
  
-//     }
-// }
+    }
+}
 
 function isEmptyLeft(col, row) {
     return getCellLeft(col, row) == "";
