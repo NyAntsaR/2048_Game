@@ -27,7 +27,7 @@ let row_count = table.rows.length;
 /*----- event listeners -----*/ 
 
 document.addEventListener('keydown', direction);
-const msgEl = document.getElementById('msg').style.fontFamily = "'Chewy', cursive";
+const msgEl = document.getElementById('msg').style.fontFamily = "'Lacquer', sans-serif";
 let scoreLabel = document.getElementById('score');
 
 /*----- functions -----*/
@@ -43,12 +43,11 @@ function init () {
                 col = Math.floor(Math.random() * row_count);
             }
 
-        var number = initial_number[Math.floor(Math.random() * 2)];
-        setCell(row, col, number);
-        table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
+            var number = initial_number[Math.floor(Math.random() * 2)];
+            setCell(row, col, number);
+            table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
           
-        }
-    
+        } 
 };
 
 /*-------------GAME OVER-----------------*/
@@ -100,9 +99,9 @@ function moveUp() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 2048){
+                        if (parseInt(num) === 16){
                             win = true;
-                            alert('Congratulations!')
+                            msg.innerHTML = "CONGRATULATIONS !";
                         }
 
                         listContainer.push([num, true]);
@@ -156,9 +155,9 @@ function moveDown() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 2048){
+                        if (parseInt(num) === 16){
                             win = true;
-                            alert('Congratulations!')                       
+                            msg.innerHTML = "CONGRATULATIONS !";                       
                         }
                         listContainer.push([num, true]);
                         score = score + num;
@@ -251,9 +250,9 @@ function moveRight() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 2048){
+                        if (parseInt(num) === 16){
                             win = true;
-                            alert('Congratulations!')
+                            msg.innerHTML = "CONGRATULATIONS !";
 
                         }
                         listContainer.push([num, true]);
@@ -312,9 +311,9 @@ function moveLeft() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 2048){
+                        if (parseInt(num) === 16){
                             win = true;
-                            alert('Congratulations!')
+                            msg.innerHTML = "CONGRATULATIONS !";
 
                         }
                         listContainer.push([num, true]);
