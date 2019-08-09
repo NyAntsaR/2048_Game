@@ -98,7 +98,7 @@ function moveUp() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 16){
+                        if (parseInt(num) === 2048){
                             win = true;
                             msg.innerHTML = "CONGRATULATIONS !";
                         }
@@ -154,7 +154,7 @@ function moveDown() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 16){
+                        if (parseInt(num) === 2048){
                             win = true;
                             msg.innerHTML = "CONGRATULATIONS !";                       
                         }
@@ -255,7 +255,7 @@ function moveRight() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 16){
+                        if (parseInt(num) === 2048){
                             win = true;
                             msg.innerHTML = "CONGRATULATIONS !";
 
@@ -316,7 +316,7 @@ function moveLeft() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 16){
+                        if (parseInt(num) === 2048){
                             win = true;
                             msg.innerHTML = "CONGRATULATIONS !";
 
