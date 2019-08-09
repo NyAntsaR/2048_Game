@@ -15,22 +15,18 @@ const COLORS_MAPPER = {
 };
 
 /*----- app's state (variables) -----*/
-
-let winner;
 let score = 0;
 let loss = false;
+let win = false;
 
 /*----- cached element references -----*/
 
-let table = document.querySelectorAll("grid");
+let table = document.getElementById("grid");
 let row_count = table.rows.length;
-
-let btn = document.getElementById('btn');
 
 /*----- event listeners -----*/ 
 
 document.addEventListener('keydown', direction);
-document.getElementById('btn').addEventListener('click', init);
 const msgEl = document.getElementById('msg').style.fontFamily = "'Chewy', cursive";
 let scoreLabel = document.getElementById('score');
 
@@ -38,44 +34,33 @@ let scoreLabel = document.getElementById('score');
 init();
 
 function init () {
-  var initial_number  = [2, 4]; 
-      for (var i = 0; i < 2; i++){
-        var row = Math.floor(Math.random() * row_count);
-        var col = Math.floor(Math.random() * row_count);
-
-        if (table.rows[row].cells[col] != "") {
-             row = Math.floor(Math.random() * row_count);
-             col = Math.floor(Math.random() * row_count);
-        } 
+    var initial_number  = [2, 4]; 
+        for (var i = 0; i < 2; i++){
+            var row = Math.floor(Math.random() * row_count);
+            var col = Math.floor(Math.random() * row_count);
+            while (!isEmpty(row, col)) {
+                row = Math.floor(Math.random() * row_count);
+                col = Math.floor(Math.random() * row_count);
+            }
 
         var number = initial_number[Math.floor(Math.random() * 2)];
-        table.rows[row].cells[col].innerHTML = number;
+        setCell(row, col, number);
         table.rows[row].cells[col].style.background = COLORS_MAPPER[number];
           
-      } 
+        }
+    
 };
 
-//-------------WINNER-----------------
-
-function winner(){
-    //Check if table contain 2048
-    for(var i = 0; i < 4; i ++){
-        for (var j = 0; j < 4; j++){
-            if (table.rows[i].cells[j] === "8"){
-                msgEl.innerHTML = 'Congratulations!'
-            }
-        }
-    }
-}
-
-//-------------GAME OVER-----------------
-
-// function gameOver(){
-//     //Display message
-//     //Disable the table
+/*-------------GAME OVER-----------------*/
+// for(var i = 0; i < 4; i++){
+//     for (var j = 0; j < 4; j ++){
+//         // if (!isEmpty(i, j)){
+//     //         loss = true;
+//     //         alert('LOSE!')
+//     //     }  
+//     }
 // }
-
-//---------- EVENT KEYBOARD ----------
+/*---------- EVENT KEYBOARD ----------*/
 
 function  direction(event){
     if(!loss){
@@ -92,14 +77,15 @@ function  direction(event){
     scoreLabel.innerHTML = 'Score: ' + score;
 }
 
-//---------- MOVES -------------------
+/*---------- MOVES -------------------*/
 
-//----------------UP-----------------------
+//----------------UP--------
 //Use FILO
 function moveUp() {
     var row;
     var listContainer;
-    
+    var oldTable = table.cloneNode(true)
+
     for (col=0; col<4; col++) {
         row = 3;
         listContainer = []; //hold value 
@@ -113,7 +99,14 @@ function moveUp() {
                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
-                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                        var num = listContainer.pop()[0] * 2;
+                        if (parseInt(num) === 2048){
+                            win = true;
+                            alert('Congratulations!')
+                        }
+
+                        listContainer.push([num, true]);
+                        score = score + num;
                         
                     } else {
                         listContainer.push([currElem, false]);
@@ -129,7 +122,6 @@ function moveUp() {
         for (i = 0; i < 4; i++) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
-                // score += number;
                 setCell(i, col, number);
                 setCellColor(i, col, COLORS_MAPPER[number]);
             }
@@ -139,14 +131,17 @@ function moveUp() {
             }
         }
     }
-    addTwo();
+    if (!oldTable.isEqualNode(table)){
+        addTwo();
+    }
 }
 
-//---------------DOWN---------------------------------
+//---------------DOWN-------------
 function moveDown() {
     var row;
     var listContainer;
-    
+    var oldTable = table.cloneNode(true)
+
     for (col=0; col<4; col++) {
         row = 0;
         listContainer = []; //hold value 
@@ -160,7 +155,13 @@ function moveDown() {
                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
-                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                        var num = listContainer.pop()[0] * 2;
+                        if (parseInt(num) === 2048){
+                            win = true;
+                            alert('Congratulations!')                       
+                        }
+                        listContainer.push([num, true]);
+                        score = score + num;
                     } else {
                         listContainer.push([currElem, false]);
                     }
@@ -175,7 +176,6 @@ function moveDown() {
         for (var i = 3; i >=0 ; i--) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
-                // score += number;
                 setCell(i, col, number);
                 setCellColor(i, col, COLORS_MAPPER[number]);
             }
@@ -184,9 +184,11 @@ function moveDown() {
                 setCellColor(i, col, "");
             }
         }
- 
     }
-    addTwo();
+    if (!oldTable.isEqualNode(table)){
+        addTwo();
+    }
+    
 }
 
 //----------CHECK--------------------
@@ -216,23 +218,23 @@ function addTwo(){
         var row = Math.floor(Math.random() * row_count);
         var col = Math.floor(Math.random() * row_count);
 
-        if (table.rows[row].cells[col].innerHTML != "") {
+        while (!isEmpty(row, col)) {
             row = Math.floor(Math.random() * row_count);
             col = Math.floor(Math.random() * row_count);
         }
 
         var number = 2;
-        table.rows[row].cells[col].innerHTML = number;
+        setCell(row, col, number);
         table.rows[row].cells[col].style.background = COLORS_MAPPER[number];   
     }
 }
 
-
-//------------------------RIGHT--------------------------
+//---------------RIGHT------------------
 
 function moveRight() {
     var col;
     var listContainer;
+    var oldTable = table.cloneNode(true)
     
     for (row=0; row<4; row++) {
         col = 0;
@@ -245,11 +247,17 @@ function moveRight() {
                 if (listContainer.length > 0) {
                     //store the element
                     var lastElement = listContainer[listContainer.length-1];
-                    console.log(lastElement);
                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
-                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                        var num = listContainer.pop()[0] * 2;
+                        if (parseInt(num) === 2048){
+                            win = true;
+                            alert('Congratulations!')
+
+                        }
+                        listContainer.push([num, true]);
+                        score = score + num;
 
                     } else {
                         listContainer.push([currElem, false]);
@@ -266,7 +274,6 @@ function moveRight() {
         for (i = 3; i >=0; i--) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
-                // score += number;
                 setCellLeft(i, row, number);
                 setCellColorLeft(i, row, COLORS_MAPPER[number]);
             }
@@ -277,15 +284,19 @@ function moveRight() {
         }
  
     } 
-    addTwo();
+
+    if (!oldTable.isEqualNode(table)){
+        addTwo();
+    }
 }
 
-// //---------------------LEFT----------------------------
+//---------------LEFT-------------------
 
 function moveLeft() {
     var col;
     var listContainer;
-    
+    var oldTable = table.cloneNode(true)
+
     for (row=0; row<4; row++) {
         col = 3;
         listContainer = []; //hold value 
@@ -300,7 +311,14 @@ function moveLeft() {
                     //verify if the last element is equal to the next element && verify if it's final or not. (final = already combined)
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
-                        listContainer.push([listContainer.pop()[0] * 2, true]);
+                        var num = listContainer.pop()[0] * 2;
+                        if (parseInt(num) === 2048){
+                            win = true;
+                            alert('Congratulations!')
+
+                        }
+                        listContainer.push([num, true]);
+                        score = score + num;
                     } else {
                         listContainer.push([currElem, false]);
                     }
@@ -316,7 +334,6 @@ function moveLeft() {
         for (i = 0; i < 4; i++) {
             if (listContainer.length > 0) {
                 var number = listContainer.pop()[0];
-                // score += number;
                 setCellLeft(i, row, number);
                 setCellColorLeft(i, row, COLORS_MAPPER[number]);
             }
@@ -327,7 +344,10 @@ function moveLeft() {
         }
  
     }
-    addTwo();
+
+    if (!oldTable.isEqualNode(table)){
+        addTwo();
+    }
 }
 
 //----------CHECK--------------------
@@ -351,9 +371,10 @@ function setCellColorLeft(col, row, color) {
     table.rows[row].cells[col].style.background = color
 }
 
-//-----------CLIPBOARD---------
-function copyToClipboard(table){
-    var newCopy = document.body.createNewCopy();
-    newCopy.moveToElementText(table);
-    newCopy.execCommand("Copy");
-}
+
+
+//Add score
+//Reset game
+//Deploy
+//ScreenShot readme.md
+
