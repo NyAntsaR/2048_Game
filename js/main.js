@@ -51,14 +51,13 @@ function init () {
 };
 
 /*-------------GAME OVER-----------------*/
-// for(var i = 0; i < 4; i++){
-//     for (var j = 0; j < 4; j ++){
-//         // if (!isEmpty(i, j)){
-//     //         loss = true;
-//     //         alert('LOSE!')
-//     //     }  
-//     }
-// }
+
+function finishGame() {
+    table.style.opacity = '0.5';
+    loss = true;
+    msg.innerHTML = "GAME OVER !";
+  }
+
 /*---------- EVENT KEYBOARD ----------*/
 
 function  direction(event){
@@ -226,6 +225,12 @@ function addTwo(){
         setCell(row, col, number);
         table.rows[row].cells[col].style.background = COLORS_MAPPER[number];   
     }
+    
+    // if(table.cells(table) !== ''){
+    //     finishGame();
+    //     return;
+    // }
+ 
 }
 
 //---------------RIGHT------------------
@@ -369,11 +374,3 @@ function setCellLeft(col, row, elm) {
 function setCellColorLeft(col, row, color) {
     table.rows[row].cells[col].style.background = color
 }
-
-
-
-//Add score
-//Reset game
-//Deploy
-//ScreenShot readme.md
-
