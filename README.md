@@ -23,4 +23,4 @@ The game ends when the board is completely filled with numbers and  you don’t 
 ![Screenshot](img/Screenshot.png)
 
 
-![click here to play!] (https://nyantsar.github.io/2048_Game/)
+![click here to play!] [https://nyantsar.github.io/2048_Game/]
