@@ -3,13 +3,18 @@
 
 <h3>1. GOAL</H3>
 
-2048 is a single-player sliding block puzzle game where the goal is to slide numberd tiles on a grid to combine them to create a tile with the number 2048.
+The objective of the game is to reach 2048 by merging adjacent similar number tiles on a 4x4 board.
+
+The game starts with two tiles of 2 random positions on the board, and continues to add new tiles of 2 or 4 on random tiles after every move. 
+
+The game ends when the board is completely filled with numbers and  you don’t have any move left.
 
 ------
 
 <h3>2. HOW TO PLAY </H3>
 
-Use your **arrow keys** to move the tiles. When two tiles with the same number touch, they **merge into one**!
+- Use your **arrow keys** to move the tiles. 
+- When two tiles with the same number touch, they **merge into one**!
 
 -----
 
@@ -18,4 +23,4 @@ Use your **arrow keys** to move the tiles. When two tiles with the same number t
 ![Screenshot](img/Screenshot.png)
 
 
-[click here to play!] (https://nyantsar.github.io/2048_Game/)
+[click here to play!] [https://nyantsar.github.io/2048_Game/]
