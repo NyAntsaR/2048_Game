@@ -18,4 +18,4 @@ Use your **arrow keys** to move the tiles. When two tiles with the same number t
 ![Screenshot](img/Screenshot.png)
 
 
-click here to play!
+[click here to play!] (https://nyantsar.github.io/2048_Game/)

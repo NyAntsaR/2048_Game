@@ -55,7 +55,7 @@ function init () {
 function finishGame() {
     table.style.opacity = '0.5';
     loss = true;
-    msg.innerHTML = "GAME OVER !";
+    msg.innerHTML = ("GAME OVER !");
   }
 
 /*---------- EVENT KEYBOARD ----------*/
@@ -226,13 +226,20 @@ function addTwo(){
         table.rows[row].cells[col].style.background = COLORS_MAPPER[number];   
     }
     
-    // if(table.cells(table) !== ''){
-    //     finishGame();
-    //     return;
-    // }
+    isEndGame()
  
 }
 
+function isEndGame() {
+    for (var i =0; i < 4; i ++){
+        for (var j = 0; j < 4; j++){
+            if (isEmpty(i, j)){
+                return false;
+            }
+        }
+    }
+    finishGame();
+}
 //---------------RIGHT------------------
 
 function moveRight() {
@@ -316,7 +323,7 @@ function moveLeft() {
                     if (lastElement[0] == currElem && lastElement[1] == false) {
                         //take the last one and show it with new value * 2
                         var num = listContainer.pop()[0] * 2;
-                        if (parseInt(num) === 2048){
+                        if (parseInt(num) === 16){
                             win = true;
                             msg.innerHTML = "CONGRATULATIONS !";
 
