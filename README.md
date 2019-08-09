@@ -18,14 +18,15 @@ The game ends when the board is completely filled with numbers and  you don’t 
 
 -----
 
-<h3>2. TECHNOLOGY </H3>
-- HTML
-- CSS
-- JavaScript
+<h3>3. TECHNOLOGY </H3>
+
+- HTML   
+- CSS  
+- JavaScript  
 
 -----
 
-<h3>3. Wireframe</h3>
+<h3>4. Wireframe</h3>
 
 ![Screenshot](img/Screenshot.png)
 
